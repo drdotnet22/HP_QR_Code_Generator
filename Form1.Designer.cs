@@ -62,7 +62,7 @@
             label1.AutoSize = true;
             label1.Location = new Point(72, 119);
             label1.Name = "label1";
-            label1.Size = new Size(255, 15);
+            label1.Size = new Size(267, 15);
             label1.TabIndex = 2;
             label1.Text = "Target URL !!! (Must begin with http:// or https://)";
             // 
@@ -142,7 +142,7 @@
             Controls.Add(targetURL);
             Controls.Add(button1);
             Name = "Form1";
-            Text = "Form1";
+            Text = "HP QRCode Generator";
             ResumeLayout(false);
             PerformLayout();
         }
