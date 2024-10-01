@@ -56,7 +56,6 @@
             targetURL.Name = "targetURL";
             targetURL.Size = new Size(415, 23);
             targetURL.TabIndex = 1;
-            targetURL.TextChanged += targetURL_TextChanged;
             // 
             // label1
             // 
@@ -65,7 +64,7 @@
             label1.Name = "label1";
             label1.Size = new Size(255, 15);
             label1.TabIndex = 2;
-            label1.Text = "Target URL (Must begin with http:// or https://)";
+            label1.Text = "Target URL !!! (Must begin with http:// or https://)";
             // 
             // label2
             // 
@@ -79,8 +78,9 @@
             // jobNumber
             // 
             jobNumber.Location = new Point(72, 192);
+            jobNumber.MaxLength = 5;
             jobNumber.Name = "jobNumber";
-            jobNumber.Size = new Size(130, 23);
+            jobNumber.Size = new Size(92, 23);
             jobNumber.TabIndex = 2;
             // 
             // label3
@@ -121,6 +121,7 @@
             // quantity
             // 
             quantity.Location = new Point(76, 249);
+            quantity.MaxLength = 5;
             quantity.Name = "quantity";
             quantity.Size = new Size(88, 23);
             quantity.TabIndex = 3;

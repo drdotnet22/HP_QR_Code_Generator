@@ -38,11 +38,6 @@ namespace HP_QR_Code_Generator
             }
         }
 
-        private void targetURL_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
         private void selectPathButton_Click(object sender, EventArgs e)
         {
             using (FolderBrowserDialog folderBrowser = new FolderBrowserDialog())
@@ -56,7 +51,7 @@ namespace HP_QR_Code_Generator
                     // Get the selected folder path
                     string selectedPath = folderBrowser.SelectedPath;
 
-                    folderPath.Text = selectedPath; // You can store it in a TextBox if desired
+                    folderPath.Text = selectedPath;
                 }
             }
         }
