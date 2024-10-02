@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             button1 = new Button();
             targetURL = new TextBox();
             label1 = new Label();
@@ -42,9 +43,9 @@
             // 
             // button1
             // 
-            button1.Location = new Point(76, 392);
+            button1.Location = new Point(72, 371);
             button1.Name = "button1";
-            button1.Size = new Size(190, 47);
+            button1.Size = new Size(200, 45);
             button1.TabIndex = 6;
             button1.Text = "Run Generator";
             button1.UseVisualStyleBackColor = true;
@@ -54,7 +55,7 @@
             // 
             targetURL.Location = new Point(72, 137);
             targetURL.Name = "targetURL";
-            targetURL.Size = new Size(415, 23);
+            targetURL.Size = new Size(425, 23);
             targetURL.TabIndex = 1;
             // 
             // label1
@@ -80,7 +81,7 @@
             jobNumber.Location = new Point(72, 192);
             jobNumber.MaxLength = 5;
             jobNumber.Name = "jobNumber";
-            jobNumber.Size = new Size(92, 23);
+            jobNumber.Size = new Size(90, 23);
             jobNumber.TabIndex = 2;
             // 
             // label3
@@ -103,9 +104,9 @@
             // 
             // folderPath
             // 
-            folderPath.Location = new Point(76, 322);
+            folderPath.Location = new Point(72, 322);
             folderPath.Name = "folderPath";
-            folderPath.Size = new Size(411, 23);
+            folderPath.Size = new Size(425, 23);
             folderPath.TabIndex = 5;
             // 
             // selectPathButton
@@ -120,10 +121,10 @@
             // 
             // quantity
             // 
-            quantity.Location = new Point(76, 249);
+            quantity.Location = new Point(72, 249);
             quantity.MaxLength = 5;
             quantity.Name = "quantity";
-            quantity.Size = new Size(88, 23);
+            quantity.Size = new Size(90, 23);
             quantity.TabIndex = 3;
             // 
             // Form1
@@ -141,6 +142,7 @@
             Controls.Add(label1);
             Controls.Add(targetURL);
             Controls.Add(button1);
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "Form1";
             Text = "HP QRCode Generator";
             ResumeLayout(false);

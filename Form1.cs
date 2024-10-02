@@ -1,4 +1,5 @@
 using QRCoder;
+using System.Diagnostics;
 using System.Net;
 
 namespace HP_QR_Code_Generator
@@ -16,11 +17,38 @@ namespace HP_QR_Code_Generator
             string jobNum = jobNumber.Text;
             string encodedURL = WebUtility.UrlEncode(targetURL.Text);
             string folderPathStr = folderPath.Text;
+
+            //Set up progress bar
+            ProgressBar progressBar = new ProgressBar();
+            progressBar.Location = new Point(76, 435);
+            progressBar.Size = new Size(411, 23);
+            progressBar.Name = "progressBar";
+            Controls.Add(progressBar);
+            progressBar.Minimum = 0;
+            progressBar.Maximum = qty;
+
+            //Loop and update progress
             for (int i = 1; i <= qty; i++)
             {
                 string sequence = i.ToString().PadLeft(5, '0');
+                progressBar.Value = i;
                 Generator(jobNum, sequence, folderPathStr, encodedURL);
             }
+            Controls.Remove(progressBar);
+
+            Button goToFolder = new Button();
+            goToFolder.Text = "Go to output folder";
+            goToFolder.Location = new Point(76, 435);
+            goToFolder.Size = new Size(411, 23);
+            goToFolder.Click += goToFolder_Click;
+            Controls.Add(goToFolder);
+
+            Button restart = new Button();
+            restart.Text = "Clear form";
+            restart.Location = new Point(272, 371);
+            restart.Size = new Size(200, 45);
+            restart.Click += reset_Click;
+            Controls.Add(restart);
         }
 
         static void Generator(string jobNumber, string sequence, string folderPathStr, string targetUrl)
@@ -54,6 +82,23 @@ namespace HP_QR_Code_Generator
                     folderPath.Text = selectedPath;
                 }
             }
+        }
+
+        private void goToFolder_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                Process.Start("explorer.exe", folderPath.Text);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error opening path: {ex.Message}");
+            }
+        }
+
+        private void reset_Click(object sender, EventArgs e)
+        {
+            Utilities.ResetAllControls(this);
         }
     }
 }
