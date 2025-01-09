@@ -32,7 +32,7 @@ namespace HP_QR_Code_Generator
             {
                 string sequence = i.ToString().PadLeft(5, '0');
                 progressBar.Value = i;
-                Generator(jobNum, sequence, folderPathStr, encodedURL);
+                APIGenerator(jobNum, sequence, folderPathStr, encodedURL);
             }
             Controls.Remove(progressBar);
 
@@ -51,7 +51,7 @@ namespace HP_QR_Code_Generator
             Controls.Add(restart);
         }
 
-        static void Generator(string jobNumber, string sequence, string folderPathStr, string targetUrl)
+        static void APIGenerator(string jobNumber, string sequence, string folderPathStr, string targetUrl)
         {
             QRCodeGenerator qrGenerator = new QRCodeGenerator();
             string url = new string("https://api.hprinting.com/api/QRCode/" + sequence + jobNumber + "/" + targetUrl);
@@ -99,6 +99,65 @@ namespace HP_QR_Code_Generator
         private void reset_Click(object sender, EventArgs e)
         {
             Utilities.ResetAllControls(this);
+        }
+
+        private void selectCsvButton_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog
+            {
+                Filter = "CSV Files|*.csv",
+                Title = "Select a CSV file"
+            };
+
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                // Get the selected file's path
+                string filePath = openFileDialog.FileName;
+
+                csvPath.Text = filePath;
+            }
+        }
+
+        private void selectCustomListOutputPath_Click(object sender, EventArgs e)
+        {
+            using (FolderBrowserDialog folderBrowser = new FolderBrowserDialog())
+            {
+                folderBrowser.Description = "Select a folder";
+                folderBrowser.ShowNewFolderButton = true;
+
+                // Show the dialog and check if the user clicked OK
+                if (folderBrowser.ShowDialog() == DialogResult.OK)
+                {
+                    // Get the selected folder path
+                    string selectedPath = folderBrowser.SelectedPath;
+
+                    customListOutputPath.Text = selectedPath;
+                }
+            }
+        }
+
+        private void generateQrFromCustomList_Click(object sender, EventArgs e)
+        {
+            string[] lines = File.ReadAllLines(csvPath.Text);
+            int row = 0;
+            foreach (string line in lines)
+            {
+                string[] columns = line.Split(',');
+                int columnIndex = Convert.ToInt32(csvColumnNumber.Value) - 1;
+                string qrURL = columns[columnIndex];
+
+                QRCodeGenerator qrGenerator = new QRCodeGenerator();
+                QRCodeData qRCodeData = qrGenerator.CreateQrCode(qrURL, QRCodeGenerator.ECCLevel.Q);
+                PngByteQRCode qrCode = new PngByteQRCode(qRCodeData);
+                byte[] qrCodeAsPngByteArr = qrCode.GetGraphic(20);
+
+                using (var ms = new MemoryStream(qrCodeAsPngByteArr))
+                {
+                    var qrCodeImage = new Bitmap(ms);
+                    qrCodeImage.Save(customListOutputPath.Text + @"\" + row.ToString() + ".png");
+                }
+                row++;
+            }
         }
     }
 }
